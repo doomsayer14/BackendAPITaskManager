@@ -11,6 +11,7 @@ public class TaskMapper {
                 .id(task.getId())
                 .name(task.getName())
                 .description(task.getDescription())
+                .taskStatus(task.getTaskStatus())
                 .build();
     }
 }

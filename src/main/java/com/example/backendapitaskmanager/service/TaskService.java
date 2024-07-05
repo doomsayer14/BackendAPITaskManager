@@ -21,7 +21,7 @@ public class TaskService {
 
     private int taskAmount;
 
-    @Value("${tasks.max.amount = 100}")
+    @Value("${tasks.max.amount}")
     private int tasksMaxAmount;
 
     public TaskService(TaskRepository taskRepository, AmqpTemplate amqpTemplate) {

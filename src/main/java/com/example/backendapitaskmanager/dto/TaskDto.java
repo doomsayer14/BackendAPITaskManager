@@ -1,7 +1,6 @@
 package com.example.backendapitaskmanager.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
+import com.example.backendapitaskmanager.entity.enums.TaskStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,4 +10,5 @@ public class TaskDto {
     private Long id;
     private String name;
     private String description;
+    private TaskStatus taskStatus;
 }
