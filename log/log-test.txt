@@ -1,0 +1,5 @@
+10:03:39.644 [main] INFO  c.e.b.service.TaskService - Nothing to delete
+10:03:39.658 [main] ERROR c.e.b.service.TaskService - Task amount is more then 0
+10:03:39.666 [main] INFO  c.e.b.service.TaskService - Task status has been updated to: COMPLETED, task id: 1
+10:03:39.672 [main] INFO  c.e.b.service.TaskService - The task has been deleted with id: 1
+10:03:39.678 [main] INFO  c.e.b.service.TaskService - Task has been updated: Task(id=1, name=Updated Name, description=null, taskStatus=null)

@@ -1,0 +1,12 @@
+09:04:00.228 [main] INFO  c.e.b.BackendApiTaskManagerApplication - Starting BackendApiTaskManagerApplication using Java 17.0.11 with PID 27368 (/Users/mac/IdeaProjects/BackendAPITaskManager/target/classes started by mac in /Users/mac/IdeaProjects/BackendAPITaskManager)
+09:04:00.232 [main] DEBUG c.e.b.BackendApiTaskManagerApplication - Running with Spring Boot v3.3.1, Spring v6.1.10
+09:04:00.233 [main] INFO  c.e.b.BackendApiTaskManagerApplication - No active profile set, falling back to 1 default profile: "default"
+09:04:04.223 [main] INFO  c.e.b.BackendApiTaskManagerApplication - Started BackendApiTaskManagerApplication in 4.302 seconds (process running for 9.916)
+10:01:48.322 [main] INFO  c.e.b.BackendApiTaskManagerApplication - Starting BackendApiTaskManagerApplication using Java 17.0.11 with PID 37984 (/Users/mac/IdeaProjects/BackendAPITaskManager/target/classes started by mac in /Users/mac/IdeaProjects/BackendAPITaskManager)
+10:01:48.323 [main] DEBUG c.e.b.BackendApiTaskManagerApplication - Running with Spring Boot v3.3.1, Spring v6.1.10
+10:01:48.323 [main] INFO  c.e.b.BackendApiTaskManagerApplication - No active profile set, falling back to 1 default profile: "default"
+10:01:51.293 [main] INFO  c.e.b.BackendApiTaskManagerApplication - Started BackendApiTaskManagerApplication in 3.178 seconds (process running for 8.678)
+10:03:09.299 [main] INFO  c.e.b.BackendApiTaskManagerApplication - Starting BackendApiTaskManagerApplication using Java 17.0.11 with PID 38253 (/Users/mac/IdeaProjects/BackendAPITaskManager/target/classes started by mac in /Users/mac/IdeaProjects/BackendAPITaskManager)
+10:03:09.300 [main] DEBUG c.e.b.BackendApiTaskManagerApplication - Running with Spring Boot v3.3.1, Spring v6.1.10
+10:03:09.301 [main] INFO  c.e.b.BackendApiTaskManagerApplication - No active profile set, falling back to 1 default profile: "default"
+10:03:12.332 [main] INFO  c.e.b.BackendApiTaskManagerApplication - Started BackendApiTaskManagerApplication in 3.274 seconds (process running for 8.762)
