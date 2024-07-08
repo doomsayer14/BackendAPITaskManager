@@ -4,6 +4,9 @@ import com.example.backendapitaskmanager.dto.TaskDto;
 import com.example.backendapitaskmanager.entity.Task;
 import org.springframework.stereotype.Component;
 
+/**
+ * This class is needed to convert {@link Task} to {@link TaskDto}.
+ */
 @Component
 public class TaskMapper {
     public TaskDto jsScriptToDto(Task task) {

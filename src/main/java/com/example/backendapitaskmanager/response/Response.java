@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * Class for HTTP responses.
+ */
 @Data
 @Builder
 @AllArgsConstructor

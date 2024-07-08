@@ -11,6 +11,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Rabbit MQ configuration.
+ */
 @EnableRabbit
 @Configuration
 public class RabbitConfiguration {

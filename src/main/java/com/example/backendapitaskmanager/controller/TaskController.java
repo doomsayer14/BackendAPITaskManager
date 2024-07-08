@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller class for {@link Task}. Provides create, delete, patch, put, get HTTP methods.
+ */
 @RestController
 @RequestMapping("api/taskmanager")
 public class TaskController {
@@ -30,6 +33,11 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    /**
+     * Endpoint which can be called to create new Task.
+     * @param task The task to be created.
+     * @return {@link Response} with new id and 200 HTTP code.
+     */
     @Operation(summary = "Create task", tags = "task")
     @ApiResponses(value = {
             @ApiResponse(
@@ -48,6 +56,11 @@ public class TaskController {
         return new Response("The task was successfully created with id = " + id);
     }
 
+    /**
+     * Endpoint which can be called to delete Task.
+     * @param id The task id to be deleted.
+     * @return {@link Response} with confirmation of successful deletion and 204 HTTP code.
+     */
     @Operation(summary = "Delete task", tags = "task")
     @ApiResponses(value = {
             @ApiResponse(
@@ -66,6 +79,12 @@ public class TaskController {
         return new Response("The task was successfully deleted");
     }
 
+    /**
+     * Endpoint which can be called to update task status.
+     * @param id The task id.
+     * @param status New task status.
+     * @return {@link Response} with new status and 200 HTTP code.
+     */
     @Operation(summary = "Update task status", tags = "task")
     @ApiResponses(value = {
             @ApiResponse(
@@ -85,6 +104,11 @@ public class TaskController {
         return new Response("The task status was successfully changed to " + taskStatus);
     }
 
+    /**
+     * Endpoint which can be called to update Task.
+     * @param task The task id to be updated.
+     * @return {@link Response} with confirmation of successful update and 200 HTTP code.
+     */
     @Operation(summary = "Update task", tags = "task")
     @ApiResponses(value = {
             @ApiResponse(
@@ -103,6 +127,10 @@ public class TaskController {
         return new Response("The task fields was successfully changed");
     }
 
+    /**
+     * Endpoint which can be called to get all Tasks.
+     * @return {@link List} of all tasks and 200 HTTP code.
+     */
     @Operation(summary = "Gets all tasks", tags = "task")
     @ApiResponses(value = {
             @ApiResponse(

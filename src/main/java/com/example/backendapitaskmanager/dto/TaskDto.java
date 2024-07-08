@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * DTO class for {@link com.example.backendapitaskmanager.entity.Task} class.
+ */
 @Data
 @Builder
 @NoArgsConstructor
