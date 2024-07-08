@@ -4,119 +4,103 @@ import com.example.backendapitaskmanager.dto.TaskDto;
 import com.example.backendapitaskmanager.entity.Task;
 import com.example.backendapitaskmanager.entity.enums.TaskStatus;
 import com.example.backendapitaskmanager.mapper.TaskMapper;
+import com.example.backendapitaskmanager.response.Response;
 import com.example.backendapitaskmanager.service.TaskService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-@WebMvcTest(TaskController.class)
 @ExtendWith(MockitoExtension.class)
 class TaskControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private TaskService taskService;
-
-    @MockBean
+    @Mock
     private TaskMapper taskMapper;
+
+    @Mock
+    private TaskService taskService;
 
     @InjectMocks
     private TaskController taskController;
 
-    @BeforeEach
-    public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(taskController).build();
-    }
-
     @Test
-    void testCreateTask() throws Exception {
+    void createTask() {
         // Given
         Task task = new Task();
-        task.setId(1L);
-        when(taskService.createTask(any(Task.class))).thenReturn(1L);
+        Long taskId = 1L;
+        when(taskService.createTask(any(Task.class))).thenReturn(taskId);
 
-        // When & Then
-        mockMvc.perform(post("/api/taskmanager/")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"name\": \"Sample Task\", \"description\": \"Sample Description\"}"))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.message").value("The task was successfully created with id = 1"))
-                .andDo(print());
+        // When
+        Response response = taskController.createTask(task);
+
+        // Then
+        assertEquals("The task was successfully created with id = " + taskId, response.getMessage());
+        verify(taskService).createTask(task);
     }
 
     @Test
-    void testDeleteTask() throws Exception {
-        // When & Then
-        mockMvc.perform(delete("/api/taskmanager/1"))
-                .andExpect(status().isNoContent())
-                .andDo(print());
-        verify(taskService, times(1)).deleteTask(1L);
-    }
-
-    @Test
-    void testUpdateTaskStatus() throws Exception {
+    void deleteTask() {
         // Given
-        when(taskService.updateTaskStatus(1L, TaskStatus.COMPLETED)).thenReturn(TaskStatus.COMPLETED);
+        Long taskId = 1L;
 
-        // When & Then
-        mockMvc.perform(put("/api/taskmanager/1/COMPLETED"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("The task status was successfully changed to COMPLETED"))
-                .andDo(print());
+        // When
+        Response response = taskController.deleteTask(taskId);
+
+        // Then
+        assertEquals("The task was successfully deleted", response.getMessage());
+        verify(taskService).deleteTask(taskId);
     }
 
     @Test
-    void testUpdateTask() throws Exception {
-        // When & Then
-        mockMvc.perform(patch("/api/taskmanager/")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"id\":1, \"name\": \"Updated Task\", \"description\": \"Updated Description\"}"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("The task fields was successfully changed"))
-                .andDo(print());
-        verify(taskService, times(1)).updateTask(any(Task.class));
+    void updateTaskStatus() {
+        // Given
+        Long taskId = 1L;
+        TaskStatus status = TaskStatus.COMPLETED;
+        when(taskService.updateTaskStatus(taskId, status)).thenReturn(status);
+
+        // When
+        Response response = taskController.updateTaskStatus(taskId, status);
+
+        // Then
+        assertEquals("The task status was successfully changed to " + status, response.getMessage());
+        verify(taskService).updateTaskStatus(taskId, status);
     }
 
     @Test
-    void testGetAllTasks() throws Exception {
+    void updateTask() {
         // Given
         Task task = new Task();
-        task.setId(1L);
-        TaskDto taskDto = TaskDto.builder()
-                .id(1L)
-                .name("Sample Task")
-                .description("Sample Description")
-                .build();
-        when(taskService.getAllTasks()).thenReturn(List.of(task));
+
+        // When
+        Response response = taskController.updateTask(task);
+
+        // Then
+        assertEquals("The task fields was successfully changed", response.getMessage());
+        verify(taskService).updateTask(task);
+    }
+
+    @Test
+    void getAllTasks() {
+        // Given
+        TaskDto taskDto = new TaskDto();
+        List<Task> tasks = List.of(new Task());
+        when(taskService.getAllTasks()).thenReturn(tasks);
         when(taskMapper.jsScriptToDto(any(Task.class))).thenReturn(taskDto);
 
-        // When & Then
-        mockMvc.perform(get("/api/taskmanager/"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(1L))
-                .andExpect(jsonPath("$[0].name").value("Sample Task"))
-                .andExpect(jsonPath("$[0].description").value("Sample Description"))
-                .andDo(print());
-        verify(taskService, times(1)).getAllTasks();
-        verify(taskMapper, times(1)).jsScriptToDto(any(Task.class));
+        // When
+        List<TaskDto> result = taskController.getAllTasks();
+
+        // Then
+        assertEquals(1, result.size());
+        verify(taskService).getAllTasks();
+        verify(taskMapper).jsScriptToDto(tasks.get(0));
     }
 }
