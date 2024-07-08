@@ -1,14 +1,17 @@
 package com.example.backendapitaskmanager.listener;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Component
-@Slf4j
 public class RabbitMqListener {
+
+    private static final Logger logger = LoggerFactory.getLogger(RabbitMqListener.class);
+
     @RabbitListener(queues = "tasks")
     public void receive(String message) {
-        log.info(message);
+        logger.info(message);
     }
 }

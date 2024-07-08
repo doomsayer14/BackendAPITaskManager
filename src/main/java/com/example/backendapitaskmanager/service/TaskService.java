@@ -5,7 +5,8 @@ import com.example.backendapitaskmanager.entity.enums.TaskStatus;
 import com.example.backendapitaskmanager.exception.TaskAmountOutOfBoundsException;
 import com.example.backendapitaskmanager.exception.TaskNotFoundException;
 import com.example.backendapitaskmanager.repository.TaskRepository;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Slf4j
 public class TaskService {
+
+    private static final Logger logger = LoggerFactory.getLogger(TaskService.class);
 
     private final TaskRepository taskRepository;
     private final AmqpTemplate amqpTemplate;
@@ -31,7 +33,7 @@ public class TaskService {
 
     public Long createTask(Task task) {
         if (taskAmount > tasksMaxAmount) {
-            log.error("Task amount is more then {}", tasksMaxAmount);
+            logger.error("Task amount is more then {}", tasksMaxAmount);
             throw new TaskAmountOutOfBoundsException("Task amount is more then " + tasksMaxAmount + ". Please delete some tasks.");
         }
         Task newTask = taskRepository.save(task);
@@ -42,20 +44,20 @@ public class TaskService {
 
     public void deleteTask(Long id) {
         if (taskAmount <= 0) {
-            log.info("Nothing to delete");
+            logger.info("Nothing to delete");
             taskRepository.deleteById(id);
             return;
         }
         taskRepository.deleteById(id);
         taskAmount--;
-        log.info("The task has been deleted with id: {}", id);
+        logger.info("The task has been deleted with id: {}", id);
     }
 
     public TaskStatus updateTaskStatus(Long id, TaskStatus status) {
         Task task = getTaskById(id);
         task.setTaskStatus(status);
         Task updatedTask = taskRepository.save(task);
-        log.info("Task status has been updated to: {}, task id: {}", updatedTask.getTaskStatus(), updatedTask.getId());
+        logger.info("Task status has been updated to: {}, task id: {}", updatedTask.getTaskStatus(), updatedTask.getId());
         return updatedTask.getTaskStatus();
     }
 
@@ -71,7 +73,7 @@ public class TaskService {
             newTask.setDescription(task.getDescription());
         }
         taskRepository.save(newTask);
-        log.info("Task has been updated: {}", newTask);
+        logger.info("Task has been updated: {}", newTask);
     }
 
     public List<Task> getAllTasks() {
